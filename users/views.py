@@ -16,7 +16,7 @@ from django.views.generic import CreateView, FormView, TemplateView
 from django.views.generic import View
 # from django.contrib.auth.views import PasswordResetConfirmView
 from .models import Member
-from .forms import CsRegisterForm, RegisterForm
+from .forms import CsRegisterForm, RegisterForm, LoginForm
 from django.http import HttpResponse
 import json
 from django.core import serializers
@@ -34,6 +34,66 @@ from django.utils.encoding import force_bytes, force_text
 from django.contrib.auth.tokens import default_token_generator
 from datetime import datetime
 # Create your views here.
+
+# 메인화면(로그인 전)
+def index(request):
+    # ip = get_ip(request)
+    # if ip is not None:
+    #     print (ip)
+    # else:
+    #     print ("IP FIND ERROR")
+
+    return render(request, 'users/index.html')
+
+# # 메인화면(로그인 후)
+# @login_message_required
+# def main_view(request):
+#     notice_list = Notice.objects.order_by('-id')[:5]
+#     calendar_property = [x.event_id for x in Calender.objects.all() if x.d_day == False]
+#     calendar_list = Calender.objects.exclude(event_id__in=calendar_property).order_by('start_date')[:5]
+#     free_list = Free.objects.filter(category='정보').order_by('-id')[:5]
+#     anonymous_list = sorted(Anonymous.objects.all(), key=lambda t: t.like_count, reverse=True)[:5]
+
+#     context = {
+#         'notice_list' : notice_list,
+#         'calendar_list' : calendar_list,
+#         'free_list' : free_list,
+#         'anonymous_list' : anonymous_list,
+#     }
+#     return render(request, 'users/main.html', context)
+
+# 로그인
+# @method_decorator(logout_message_required, name='dispatch')
+class LoginView(FormView):
+    template_name = 'users/login.html'
+    form_class = LoginForm
+    success_url = '/users/main/'
+
+    def form_valid(self, form):
+        user_id = form.cleaned_data.get("user_id")
+        password = form.cleaned_data.get("password")
+        user = authenticate(self.request, username=user_id, password = password)
+
+        if user is not None:
+            self.request.session['user_id'] = user_id
+            login(self.request, user)
+            remember_session = self.request.POST.get('remember_session', False)
+            if remember_session:
+                settings.SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+        return super().form_valid(form)
+
+# 로그아웃
+def logout_view(request):
+    logout(request)
+    return redirect('/')
+
+
+
+
+
+
+
 # SMTP 메일 인증 
 def form_valid(self, form):
     self.object = form.save()
