@@ -44,10 +44,10 @@ class Member(AbstractBaseUser, PermissionsMixin):
 
     user_id = models.CharField(max_length=17, verbose_name="아이디", unique=True)
     password = models.CharField(max_length=256, verbose_name="비밀번호")
-    email = models.EmailField(max_length=128, verbose_name="이메일")
+    email = models.EmailField(max_length=128, verbose_name="이메일", null=True, unique=True)
     hp = models.IntegerField(verbose_name="핸드폰번호", null=True, unique=True)
-    name = models.CharField(max_length=128, verbose_name="이름", unique=True)
-    student_id = models.IntegerField(verbose_name="학번", unique=True)
+    name = models.CharField(max_length=128, verbose_name="이름", null=True, unique=True)
+    student_id = models.IntegerField(verbose_name="학번", null=True, unique=True)
     grade = models.CharField(choices=GRADE_CHOICES, max_length=18, verbose_name="학년", null=True)
     level = models.CharField(choices=LEVEL_CHOICES, max_length=18, verbose_name="등급", default=3)
     circles = models.CharField(choices=CIRCLES_CHOICES, max_length=18, verbose_name="랩실", null=True)
