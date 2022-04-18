@@ -154,3 +154,13 @@ LOGIN_URL = '/users/login/' # 로그인 url
 LOGIN_REDIRECT_URL = '/users/main/' # 로그인 후 URL
 LOGOUT_REDIRECT_URL = '/' # 로그아웃 후 URL
 AUTH_USER_MODEL = "users.Member" # 커스텀 인증 모델
+
+
+# SMTP
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.naver.com'
+EMAIL_HOST_USER = 'dnjsqls820'
+EMAIL_HOST_PASSWORD = get_secret("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = True
+EMAIL_PORT = 465
+DEFAULT_FROM_MAIL = 'dnjsqls820'
