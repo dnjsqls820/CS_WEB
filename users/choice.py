@@ -26,5 +26,5 @@ CIRCLES_CHOICES = (
 )
 
 DEPARTMENT_CHOICES = (
-    
+    ('컴퓨터공학과','컴퓨터공학과'),
 )
