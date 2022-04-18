@@ -19,6 +19,9 @@ LEVEL_CHOICES = (
 )
 
 CIRCLES_CHOICES = (
+    ("미가입", "미가입"),
+    ("멀티미디어","멀티미디어"),
+    ("CE랩","CE랩")
     
 )
 
