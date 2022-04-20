@@ -18,7 +18,7 @@ from django.views.generic import CreateView, FormView, TemplateView
 from django.views.generic import View
 # from django.contrib.auth.views import PasswordResetConfirmView
 from .models import Member
-from .forms import CsRegisterForm, CustomCsUserChangeForm, RecoveryPwForm, RegisterForm, LoginForm, RecoveryIdFrom, RecoveryPwForm, CustomSetPasswordForm, CustomPasswordChangeForm,CustomUserChangeForm
+from .forms import CsRegisterForm, CustomCsUserChangeForm, RecoveryPwForm, RegisterForm, LoginForm, RecoveryIdFrom, RecoveryPwForm, CustomSetPasswordForm, CustomPasswordChangeForm,CustomUserChangeForm,CheckPasswordForm
 from django.http import HttpResponse
 import json
 from django.core import serializers
@@ -164,6 +164,27 @@ def profile_update_view(request):
             user_change_form = CustomUserChangeForm(instance = request.user)
 
         return render(request, 'users/profile_update.html', {'user_change_form':user_change_form})
+
+# 회원탈퇴
+@login_message_required
+def profile_delete_view(request):
+    if request.method == 'POST':
+        password_form = CheckPasswordForm(request.user, request.POST)
+
+        if password_form.is_valid():
+            request.user.delete()
+            logout(request)
+            messages.success(request, '회원탈퇴가 완료되었습니다.')
+            return redirect('/users/login')
+        else:
+            password_form = CheckPasswordForm(request.user)
+        
+        return render(request, 'users/profile_delete.html',{'password_form': password_form})
+
+
+
+
+
 # 비밀번호 변경
 @login_message_required
 def password_edit_view(request):

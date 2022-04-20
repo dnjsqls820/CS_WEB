@@ -7,7 +7,7 @@ app_name = 'users'
 
 urlpatterns = [
     #메인
-    path('main/', views.index, name = 'main'),
+    path('', views.index, name = 'main'),
     #회원가입
     path('agreement/', views.AgreementView.as_view(), name='agreement'),
     path('register/', views.RegisterView.as_view(), name='register'),
@@ -21,6 +21,7 @@ urlpatterns = [
     #프로필
     path('profile/', views.profile_view, name='profile'),
     path('profile/update/', views.profile_update_view, name='profile_update'),
+    path('profile/delete/', views.profile_delete_view, name='profile_delete'),
     #비밀번호 변경
     path('profile/password', views.password_edit_view, name='password_edit'),
     #아이디 찾기
