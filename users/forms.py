@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth.forms import SetPasswordForm
 from .models import Member
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
 from .choice import *
 
 def hp_validator(value):
@@ -141,20 +141,25 @@ class RegisterForm(UserCreationForm):
         return user
 
 
-# 로그인
+# 로그인 폼
 class LoginForm(forms.Form):
     user_id = forms.CharField(
         widget=forms.TextInput(
-            attrs={'calss': 'form-control',}),
-            error_messages = {'required': '아이디를 입력해주세요'},
-            max_length=17,
-            label='아이디'
+        attrs={'class': 'form-control',}), 
+        error_messages={
+            'required': '아이디을 입력해주세요.'
+        },
+        max_length=32,
+        label='아이디'
     )
+
     password = forms.CharField(
         widget=forms.PasswordInput(
-            attrs={'class': 'form-control',}),
-            error_messages={'required': '비밀번호를 입력해주세요'},
-            label='비밀번호'
+        attrs={'class': 'form-control',}), 
+        error_messages={
+            'required': '비밀번호를 입력해주세요.'
+        },
+        label='비밀번호'
     )
 
     def clean(self):
@@ -164,12 +169,72 @@ class LoginForm(forms.Form):
 
         if user_id and password:
             try:
-                user = Member.objects.get(user_id=user_id)
+               user = Member.objects.get(user_id=user_id)
             except Member.DoesNotExist:
                 self.add_error('user_id', '아이디가 존재하지 않습니다.')
                 return
+            
             if not check_password(password, user.password):
                 self.add_error('password', '비밀번호가 틀렸습니다.')
+
+
+# 일반회원정보 수정 폼
+class CustomUserChangeForm(UserChangeForm):
+    password = None
+    # email = forms.EmailField(label='이메일', widget=forms.EmailInput(
+    #     attrs={'class': 'form-control',}), 
+    # )        
+    hp = forms.IntegerField(label='연락처', widget=forms.NumberInput(
+        attrs={'class': 'form-control', 'maxlength':'11', 'oninput':"maxLengthCheck(this)",}), 
+    )    
+    name = forms.CharField(label='이름', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'maxlength':'8',}), 
+    )        
+    student_id = forms.IntegerField(required=False, label='학번', widget=forms.NumberInput(
+        attrs={'class': 'form-control', 'maxlength':'8', 'oninput':"maxLengthCheck(this)",}), 
+    )
+    grade = forms.ChoiceField(choices=GRADE_CHOICES, label='학년', widget=forms.Select(
+        attrs={'class': 'form-control',}), 
+    )
+    department = forms.ChoiceField(choices=DEPARTMENT_CHOICES, label='학과', widget=forms.Select(
+        attrs={'class': 'form-control',}), 
+    )
+       
+    class Meta:
+        model = Member()
+        fields = ['hp', 'name', 'student_id', 'grade', 'department']
+
+
+# 컴공회원정보 수정
+class CustomCsUserChangeForm(UserChangeForm):
+    password = None
+    hp = forms.IntegerField(label='연락처', widget=forms.NumberInput(
+        attrs={'class': 'form-control', 'maxlength':'11', 'oninput':'maxLengthCheck(this)',}),
+        )
+    name = forms.CharField(label='이름',widget=forms.TextInput(
+        attrs={'class': 'form-control', 'maxlength':'8',}),
+    )
+    student_id = forms.IntegerField(label='학번', widget=forms.NumberInput(
+        attrs={'class': 'form-control', 'maxlength':'8', 'oninput':'maxLengthCheck(this)',}),
+    )
+    grade = forms.ChoiceField(choices=GRADE_CHOICES, label='학년', widget=forms.Select(
+        attrs={'class': 'form-control',}), 
+    )
+    circles = forms.ChoiceField(choices=CIRCLES_CHOICES, label='동아리', widget=forms.Select(
+        attrs={'class': 'form-control',}), 
+    )
+
+    class Meta:
+        model = Member()
+        fields = ['hp','name','student_id','grade','circles']
+
+
+
+
+
+
+
+
 
 # 아이디 찾기 Ajax
 class RecoveryIdFrom(forms.Form):
@@ -233,4 +298,23 @@ class CustomSetPasswordForm(SetPasswordForm):
         self.fields['new_password2'].label = '새 비밀번호 확인'
         self.fields['new_password2'].widget.attrs.update({
             'class' : 'form-control',
+        })
+
+
+# 비밀번호 변경
+class CustomPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomPasswordChangeForm, self).__init__(*args, **kwargs)
+        self.fields['old_password'].label = '기존 비밀번호'
+        self.fields['old_password'].widget.attrs.update({
+            'class' : 'form-control',
+            'autofocus' : False,
+        })
+        self.fields['new_password1'].label = '새 비밀번호'
+        self.fields['new_password1'].widget.attrs.update({
+            'class' : 'form-control',
+        })
+        self.fields['new_password2'].label= '새 비밀번호 확인'
+        self.fields['new_password2'].widget.attrs.update({
+            'class' : 'form-control'
         })

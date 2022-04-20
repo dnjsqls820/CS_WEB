@@ -6,8 +6,8 @@ from . import views
 app_name = 'users'
 
 urlpatterns = [
-
-    # path('main/', views.index, name = 'main'),
+    #메인
+    path('main/', views.index, name = 'main'),
     #회원가입
     path('agreement/', views.AgreementView.as_view(), name='agreement'),
     path('register/', views.RegisterView.as_view(), name='register'),
@@ -18,6 +18,11 @@ urlpatterns = [
     #로그인
     path('login/', views.LoginView.as_view(), name='login'),
     path('logout/', views.logout_view, name='logout'),
+    #프로필
+    path('profile/', views.profile_view, name='profile'),
+    path('profile/update/', views.profile_update_view, name='profile_update'),
+    #비밀번호 변경
+    path('profile/password', views.password_edit_view, name='password_edit'),
     #아이디 찾기
     path('recovery/id', views.RecoverIdView.as_view(), name='recovery_id'),
     path('recovery/id/find', views.ajax_find_id_view, name='ajax_id'),
