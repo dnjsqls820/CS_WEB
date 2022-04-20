@@ -39,11 +39,6 @@ from datetime import datetime
 
 # # 메인화면(로그인 전)
 def index(request):
-    # ip = get_ip(request)
-    # if ip is not None:
-    #     print (ip)
-    # else:
-    #     print ("IP FIND ERROR")
 
     return render(request, 'users/index.html')
 
