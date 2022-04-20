@@ -140,6 +140,7 @@ def get_secret(setting, secrets=secrets):
     except KeyError:
         error_msg = "Set the {0} environment variable".format(setting)
         raise ImproperlyConfigured(error_msg)
+        
 SECRET_KEY = get_secret("SECRET_KEY")
 
 
@@ -157,13 +158,14 @@ LOGOUT_REDIRECT_URL = '/' # 로그아웃 후 URL
 AUTH_USER_MODEL = "users.Member" # 커스텀 인증 모델
 
 
-# SMTP
+# 네이버 SMTP
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.naver.com'
 EMAIL_HOST_USER = 'dnjsqls820'
-EMAIL_HOST_PASSWORD = get_secret("EMAIL_HOST_PASSWORD")
+# EMAIL_HOST_PASSWORD = get_secret("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_PASSWORD = get_secret('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
-EMAIL_PORT = 465
+EMAIL_PORT = 587
 DEFAULT_FROM_MAIL = 'dnjsqls820'
 
 #로그인 상태 유지
