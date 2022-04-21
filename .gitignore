@@ -3,7 +3,7 @@
 *.pot
 *.pyc
 __pycache__/
-db.sqllite3
+db.sqlite3
 media
 secrets.json
 debug.log
