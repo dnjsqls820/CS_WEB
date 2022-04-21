@@ -1,1 +1,10 @@
+## Django ##
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqllite3
+media
 secrets.json
+debug.log
+django_env
