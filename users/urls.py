@@ -20,9 +20,10 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     #프로필
     path('profile/', views.profile_view, name='profile'),
+    # path('profile/post', views.profile_post_view, name='profile_post'),
+    # path('profile/comment', views.profile_comment, name='profile_commit'),
     path('profile/update/', views.profile_update_view, name='profile_update'),
     path('profile/delete/', views.profile_delete_view, name='profile_delete'),
-    #비밀번호 변경
     path('profile/password', views.password_edit_view, name='password_edit'),
     #아이디 찾기
     path('recovery/id', views.RecoverIdView.as_view(), name='recovery_id'),

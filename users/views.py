@@ -140,7 +140,7 @@ class RegisterView(CsRegisterView):
     template_name = 'users/register.html'
     form_class = RegisterForm
 
-# 프로필
+# 프로필 보기
 @login_message_required
 def profile_view(request):
     if request.method == 'GET':
@@ -254,7 +254,7 @@ def ajax_find_pw_view(request):
     return HttpResponse(json.dump({"result": target_user.user_id}, cls=DjangoJSONEncoder), content_type = "application/json")
     # Ajax로 요청된 값들은 Member모델에서 찾은 후 반환된 targeet_user의 auth필드에 방금 구현한 인증번호 생성함수를 통해
     # auth_num를 저장합니다. 후에 send_mail함수로 인증번호인 auth_num을 담은 메일을 사용자에게 발송합니다.
-
+# 비밀번호찾기 인증번호 확인
 def auth_confirm_view(request):
     user_id = request.POST.get('user_id')
     input_auth_num = request.POST.get('input_auth_num')
@@ -269,6 +269,7 @@ def auth_confirm_view(request):
 
     
     # auth_confirm_view를 통해 Ajax통신이 성공했다면 redirect될 비밀번호 변경창의 view를 입력한다.
+# 비밀번호찾기 새 비밀번호 등록
 @logout_message_required
 def auth_pw_reset_view(request):
     if request.method == 'GET':
@@ -332,4 +333,12 @@ def activate(request, uid64, token):
 
     # messages.error(request, '메일 인증에 실패했습니다.')
     # return redirect('users:login')
+
+
+
+# # 내가 쓴 글 보기
+# @login_message_required
+# @require_GET
+# def profile_post_view(request):
+#     free_list = Free.objects.filter(writer=request.user.id).order_by('-registered_date')
 
