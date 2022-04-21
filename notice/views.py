@@ -26,7 +26,7 @@ class NoticeListView(ListView):
     paginate_by = 10
     template_name = 'notice/notice_list.html'
     context_object_name = 'notice_list'
-
+    
     def get_queryset(self):
         notice_list = Notice.objects.order_by('-id')
         return notice_list
@@ -49,7 +49,9 @@ class NoticeListView(ListView):
         page_range = paginator.page_range[start_index:end_index]
         context['page_range'] = page_range
 
-
+        #상단고정
+        notice_fixed = Notice.objects.filter(top_fixed=True).order_by('-registered_date')
+        context['notice_fixed'] = notice_fixed
         #선택한 검색타입을 계속 유지
         search_keyword = self.request.GET.get('q','')
         search_type = self.request.GET.get('type','')
@@ -58,6 +60,8 @@ class NoticeListView(ListView):
             context['q'] = search_keyword
         context['type'] = search_type
         return context
+
+        
 #게시글 작성
 @login_message_required
 @admin_required
@@ -100,15 +104,56 @@ def get_queryset(self):
             messages.error(self.request, '검색어는 2글자 이상 입력해주세요.')
     return notice_list
 
+#게시글 수정
+@login_message_required
+def notice_edit_view(request, pk):
+    notice = Notice.objects.get(id=pk)
+    if request.method == "POST":
+        if(notice.writer == request.user or request.user.level == '0'):
+            form = NoticeWriteForm(request.POST, instance=notice)
+            if form.is_valid():
+                notice = form.save(commit = False)
+                notice.save()
+                messages.success(request, "수정되었습니다.")
+                return redirect('/notice/'+str(pk))
+    else:
+        notice = Notice.objects(id=pk)
+        if notice.writer == request.user or request.level == '0':
+            form = NoticeWriteForm(instance=notice)
+            context = {
+                'form' : form,
+                'edit' : '수정하기',
+            }
+            return render(request, 'notice/notice_writer.html', context)
+        else:
+            messages.error(request, '본인 게시글이 아닙니다.')
+            return redirect('/notice/'+str(pk))
 
+# 게시글 삭제
+@login_message_required
+def notice_delete_view(request,pk):
+    notice = Notice.objects.get(id=pk)
+    if notice.writer == request.user or request.user.level == '0':
+        notice.delete()
+        messages.success(request, '삭제되었습니다.')
+        return redirect('/notice/')
+    else:
+        messages.error(request, '본인 게시글이 아닙니다.')
+        return redirect('/notice/'+str(pk))
 # 게시글 자세히보기 
 @login_message_required
 def notice_detail_view(request, pk):
     notice = get_object_or_404(Notice,  pk=pk)
     session_cookie = request.session['user_id']
     cookie_name = F'notice_hits:{session_cookie}'
+    # 본인 게시글 확인
+    if request.user == notice.writer:
+        notice_auth = True
+    else:
+        notice_auth = False
     context = {
         'notice': notice,
+        'noitce_auth' : notice_auth,
     }
     response = render(request, 'notice/notice_detail.html', context)
     
