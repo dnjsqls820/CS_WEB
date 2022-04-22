@@ -15,4 +15,4 @@ class NoticeWriteForm(forms.ModelForm):
 
     class Meta:
         model = Notice
-        fields = ['title','content', 'top_fixed']
+        fields = ['title','content', 'top_fixed', 'upload_files']

@@ -11,4 +11,5 @@ urlpatterns = [
     path('<int:pk>/edit', views.notice_edit_view, name='notice_edit'),
     path('<int:pk>/delete', views.notice_delete_view, name= 'notice_delete'),
     path('write/', views.notice_write_view, name='notice_write'),
+    path('download/<int:pk>', views.notice_download_view, name = 'noitce_download'),
 ]

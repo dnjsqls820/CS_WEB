@@ -1,4 +1,5 @@
 # notice/views.py
+from curses.ascii import HT
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import View, ListView, DetailView, FormView, CreateView
@@ -10,10 +11,9 @@ from django.urls import reverse
 from .forms import NoticeWriteForm
 from users.models import Member
 import mimetypes
-from mimetypes import guess_type
 import os
 import re
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, Http404
 from urllib.parse import quote
 import urllib
 from django.conf import settings
@@ -62,18 +62,21 @@ class NoticeListView(ListView):
         return context
 
         
-#게시글 작성
+#게시글 작성 + 파일명 저장
 @login_message_required
 @admin_required
 def notice_write_view(request):
     if request.method == 'POST':
-        form = NoticeWriteForm(request.POST)
+        form = NoticeWriteForm(request.POST, request.FILES)
         user = request.session['user_id']
         user_id = Member.objects.get(user_id = user)
 
         if form.is_valid():
             notice = form.save(commit = False)
             notice.writer = user_id
+            if request.FILES:
+                if 'upload_files' in request.FILES.keys():
+                    notice.filename = request.FILES['upload_files'].name
             notice.save()
             return redirect('notice:notice_list')
     else:
@@ -110,9 +113,18 @@ def notice_edit_view(request, pk):
     notice = Notice.objects.get(id=pk)
     if request.method == "POST":
         if(notice.writer == request.user or request.user.level == '0'):
-            form = NoticeWriteForm(request.POST, instance=notice)
+            file_change_check = request.POST.get('fileChange', False)
+            file_check = request.POST.get('upload_files-clear', False)
+
+            if file_check or file_change_check:
+                os.remove(os.path.join(settings.MEDAI_ROOT, notice.upload_files.path))
+
+            form = NoticeWriteForm(request.POST, request.FILES, instance=notice)
             if form.is_valid():
                 notice = form.save(commit = False)
+                if request.FILES:
+                    if 'upload_files' in request.FILES.keys():
+                        notice.filename = request.FILES['upload_files'].name
                 notice.save()
                 messages.success(request, "수정되었습니다.")
                 return redirect('/notice/'+str(pk))
@@ -124,6 +136,9 @@ def notice_edit_view(request, pk):
                 'form' : form,
                 'edit' : '수정하기',
             }
+            if notice.filename and notice.upload_files:
+                context['filename'] = notice.filename
+                context['file_url'] = notice.upload_files.url
             return render(request, 'notice/notice_writer.html', context)
         else:
             messages.error(request, '본인 게시글이 아닙니다.')
@@ -172,3 +187,19 @@ def notice_detail_view(request, pk):
         notice.save()
         return response
     return render(request, 'notice/notice_detail.html',context)
+
+
+#한글명 첨부파일 다운로드
+@login_message_required
+def notice_download_view(request, pk):
+    notice = get_object_or_404(Notice, pk=pk)
+    url = notice.upload_files.url[1:]
+    file_url = urllib.parse.unquote(url)
+
+    if os.path.exists(file_url):
+        with open(file_url, 'rb') as fh:
+            quote_file_url = urllib.parse.quote(notice.filename.encode('utf-8'))
+            response = HttpResponse(fh.read(), content_type=mimetypes.guess_type(file_url)[0])
+            response['Content-Disposition'] = 'attachment;filename*=UTF-8\'\'%s' % quote_file_url
+            return response
+        raise Http404
