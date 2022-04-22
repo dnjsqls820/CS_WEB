@@ -18,6 +18,8 @@ from django.views.generic import CreateView, FormView, TemplateView
 from django.views.generic import View
 # from django.contrib.auth.views import PasswordResetConfirmView
 from .models import Member
+from free.models import Free, Comment
+from notice.models import Notice
 from .forms import CsRegisterForm, CustomCsUserChangeForm, RecoveryPwForm, RegisterForm, LoginForm, RecoveryIdFrom, RecoveryPwForm, CustomSetPasswordForm, CustomPasswordChangeForm,CustomUserChangeForm,CheckPasswordForm
 from .helper import send_mail
 from django.http import HttpResponse
@@ -43,22 +45,17 @@ def index(request):
 
     return render(request, 'users/index.html')
 
-# # 메인화면(로그인 후)
-# @login_message_required
-# def main_view(request):
-#     notice_list = Notice.objects.order_by('-id')[:5]
-#     calendar_property = [x.event_id for x in Calender.objects.all() if x.d_day == False]
-#     calendar_list = Calender.objects.exclude(event_id__in=calendar_property).order_by('start_date')[:5]
-#     free_list = Free.objects.filter(category='정보').order_by('-id')[:5]
-#     anonymous_list = sorted(Anonymous.objects.all(), key=lambda t: t.like_count, reverse=True)[:5]
+# 메인화면(로그인 후)
+@login_message_required
+def main_view(request):
+    notice_list = Notice.objects.order_by('-id')[:5]
+    free_list = Free.objects.filter(category='정보').order_by('-id')[:5]
 
-#     context = {
-#         'notice_list' : notice_list,
-#         'calendar_list' : calendar_list,
-#         'free_list' : free_list,
-#         'anonymous_list' : anonymous_list,
-#     }
-#     return render(request, 'users/main.html', context)
+    context = {
+        'notice_list' : notice_list,
+        'free_list' : free_list,
+    }
+    return render(request, 'users/main.html', context)
 
 # 로그인
 # @method_decorator(logout_message_required, name='dispatch')
@@ -140,32 +137,6 @@ class RegisterView(CsRegisterView):
     template_name = 'users/register.html'
     form_class = RegisterForm
 
-# 프로필 보기
-@login_message_required
-def profile_view(request):
-    if request.method == 'GET':
-        return render(request, 'users/profile.html')
-
-# 프로필 수정
-@login_message_required
-def profile_update_view(request):
-    if request.method == 'POST':
-        if request.user.department == '컴퓨터공학과':
-            user_change_form = CustomCsUserChangeForm(request.POST, instance = request.user)
-        else:   
-            user_change_form = CustomUserChangeForm(request.POST, instance = request.user)
-
-        if user_change_form.is_valid():
-            user_change_form.save()
-            messages.success(request, '회원정보가 수정되었습니다.')
-            return render(request, 'users/profile.html')
-    else:
-        if request.user.department == '컴퓨터공학과':
-            user_change_form = CustomCsUserChangeForm(instance = request.user)
-        else:   
-            user_change_form = CustomUserChangeForm(instance = request.user)
-
-        return render(request, 'users/profile_update.html', {'user_change_form':user_change_form})
 
 # 회원탈퇴
 @login_message_required
@@ -182,9 +153,6 @@ def profile_delete_view(request):
             password_form = CheckPasswordForm(request.user)
         
         return render(request, 'users/profile_delete.html',{'password_form': password_form})
-
-
-
 
 
 # 비밀번호 변경
@@ -324,21 +292,66 @@ def activate(request, uid64, token):
         messages.error(request, uid)
         return redirect('users:login')
 
-    if default_token_generator.check_token(current_user, '메일 인증에 실패하였습니다.'):
+    if default_token_generator.check_token(current_user, token):
         current_user.is_active = True
         current_user.save()
 
         messages.info(request, '메일 인증이 완료 되었습니다. 회원가입을 축하드립니다!')
         return redirect('users:login')
 
-    # messages.error(request, '메일 인증에 실패했습니다.')
-    # return redirect('users:login')
+    messages.error(request, '메일 인증에 실패했습니다.')
+    return redirect('users:login')
+
+
+# 프로필 보기
+@login_message_required
+def profile_view(request):
+    if request.method == 'GET':
+        return render(request, 'users/profile.html')
+
+# 프로필 수정
+@login_message_required
+def profile_update_view(request):
+    if request.method == 'POST':
+        if request.user.department == '컴퓨터공학과':
+            user_change_form = CustomCsUserChangeForm(request.POST, instance = request.user)
+        else:   
+            user_change_form = CustomUserChangeForm(request.POST, instance = request.user)
+
+        if user_change_form.is_valid():
+            user_change_form.save()
+            messages.success(request, '회원정보가 수정되었습니다.')
+            return render(request, 'users/profile.html')
+    else:
+        if request.user.department == '컴퓨터공학과':
+            user_change_form = CustomCsUserChangeForm(instance = request.user)
+        else:   
+            user_change_form = CustomUserChangeForm(instance = request.user)
+
+        return render(request, 'users/profile_update.html', {'user_change_form':user_change_form})
 
 
 
-# # 내가 쓴 글 보기
-# @login_message_required
-# @require_GET
-# def profile_post_view(request):
-#     free_list = Free.objects.filter(writer=request.user.id).order_by('-registered_date')
+# 내가 쓴 글 보기
+@login_message_required
+@require_GET
+def profile_post_view(request):
+    free_list = Free.objects.filter(writer=request.user.id).order_by('-registered_date')
+    context = {
+        'free_list' : free_list,
+    }
+    if request.user.level == '0' or request.user.level == '1':
+        notice_list = Notice.objects.filter(writer=request.user.id).order_by('-registered_date')
+        context['notice_list'] = notice_list
+    return render(request, 'users/profile_post.html', context)
 
+
+# 댓글 단 글 보기
+@login_message_required
+@require_GET
+def profile_comment_view(request):
+    comment_list = Comment.objects.select_related('post').filter(writer=request.user).exclude(deleted=True).order_by('-created')
+    context = {
+        'comment_list' : comment_list,
+    }
+    return render(request, 'users/profile_comment.html', context)

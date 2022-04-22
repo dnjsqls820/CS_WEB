@@ -6,8 +6,9 @@ from . import views
 app_name = 'users'
 
 urlpatterns = [
+    path('',views.index, name = 'index'),
     #메인
-    path('', views.index, name = 'main'),
+    path('main/', views.main_view, name = 'main'),
     #회원가입
     path('agreement/', views.AgreementView.as_view(), name='agreement'),
     path('register/', views.RegisterView.as_view(), name='register'),
@@ -20,8 +21,8 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     #프로필
     path('profile/', views.profile_view, name='profile'),
-    # path('profile/post', views.profile_post_view, name='profile_post'),
-    # path('profile/comment', views.profile_comment, name='profile_commit'),
+    path('profile/post', views.profile_post_view, name='profile_post'),
+    path('profile/comment', views.profile_comment_view, name='profile_comment'),
     path('profile/update/', views.profile_update_view, name='profile_update'),
     path('profile/delete/', views.profile_delete_view, name='profile_delete'),
     path('profile/password', views.password_edit_view, name='password_edit'),

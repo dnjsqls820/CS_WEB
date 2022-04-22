@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'users',
     'notice',
+    'free',
 ]
 
 MIDDLEWARE = [

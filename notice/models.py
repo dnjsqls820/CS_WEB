@@ -1,6 +1,5 @@
 # notice/models.py
 import os
-from tabnanny import verbose
 from django.conf import settings
 from django.db import models
 from uuid import uuid4
@@ -11,7 +10,7 @@ from datetime import datetime
 #파일 업로드
 def get_file_path(instance, filename):
     ymd_path = datetime.now().strftime('%Y/%m/%d')
-    uuid_name = uuid4.hex()
+    uuid_name = uuid4().hex
     return '/'.join(['upload_file/', ymd_path, uuid_name])
 
 

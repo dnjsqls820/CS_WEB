@@ -28,3 +28,10 @@ CIRCLES_CHOICES = (
 DEPARTMENT_CHOICES = (
     ('컴퓨터공학과','컴퓨터공학과'),
 )
+
+# free App choiceField
+CATEGORY_CHOICES = (
+    ('자유','자유'),
+    ('질문','질문'),
+    ('정보','정보'),
+)

@@ -535,7 +535,7 @@
                                         <input type="checkbox" name="agreement2" />
                                         <span style="font-weight: bold;">개인정보 수집 및 이용에 동의합니다.</span>
                                     </label>
-                                    <!-- <strong><input type="checkbox" name="agreement2"> 개인정보 수집 및 이용에 동의합니다.</strong> -->
+                                    
                                 </div>
                             </div>
 
@@ -545,12 +545,7 @@
                                     title="호남대 컴퓨터공학과 학생용" value="csregister">컴공회원가입</button>
                                 <button type="submit" name="register" style="opacity: 90%; font-size: 16px;"
                                     class="btn btn-red" value="register">일반회원가입</button>
-                                <!-- <button type="submit" class="btn btn-dark" name="csregister" value="csregister">컴공회원가입</button>
-            <button type="submit" class="btn btn-dark" name="register" value="register">일반회원가입</button> -->
-                                <!-- <button class="btn btn-dark" name="csregister" disabled="true"
-                onClick="location.href='/users/csregister'">컴공회원가입</button>
-                <button class="btn btn-dark" name="register" disabled="true"
-                onClick="location.href='/users/register'">일반회원가입</button> -->
+                                
                             </div>
                         </form>
                     </div>
@@ -560,27 +555,6 @@
     </div>
 </div>
 
-<!-- <script type="text/javascript">
-    function checkAgreement() {
-        var csregister = document.getElementsByName('csregister')[0];
-        var register = document.getElementsByName('register')[0];
-        var agreement1 = document.getElementsByName('agreement1')[0];
-        var agreement2 = document.getElementsByName('agreement2')[0];
-        if (agreement1.checked == true && agreement2.checked == true) {
-            csregister.disabled = false;
-            register.disabled = false;
-        } else {
-            csregister.disabled = true;
-            register.disabled = true;
-        }
-    }
-    window.onload = function() {
-        setTimeout(() => {
-            document.getElementsByName('agreement1')[0].checked = false;
-            document.getElementsByName('agreement2')[0].checked = false;
-        }, 100);
-    }
-</script> -->
 <script type="text/javascript">
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()

@@ -1,5 +1,4 @@
 # notice/views.py
-from curses.ascii import HT
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import View, ListView, DetailView, FormView, CreateView
@@ -62,7 +61,7 @@ class NoticeListView(ListView):
         return context
 
         
-#게시글 작성 + 파일명 저장
+#공지사항 작성 + 파일명 저장
 @login_message_required
 @admin_required
 def notice_write_view(request):
