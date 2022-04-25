@@ -50,12 +50,17 @@
                                 <td class="profile_title">학과</td>
                                 <td class="profile_content">{{ user.department|default:'선택안함' }}</td>
                             </tr>
-                            {% if user.department == '컴퓨터공학부' %}
+                            {% if user.department == '컴퓨터공학과' %}
                             <tr>
                                 <td class="profile_title">동아리</td>
                                 <td class="profile_content">{{ user.circles }}</td>
                             </tr>
                             {% endif %}
+                            <tr>
+                                <td class="profile_title">비밀번호</td>
+                                <td class="profile_content">{{ user.password}}</td>
+                            
+                            </tr>
                         </table>
     
                         <hr>

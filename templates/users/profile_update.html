@@ -28,32 +28,12 @@
                                     <td class="profile_content">&nbsp;&nbsp;{{ user.user_id }}</td>
                                     {% endif %}
                                 </tr>
-                                {% if user.department == '컴퓨터공학부' %}
+                                {% if user.department == '컴퓨터공학과' %}
                                 <tr>
                                     <td class="profile_title">학과</td>
                                     <td class="profile_content">&nbsp;&nbsp;{{ user.department }}</td>
                                 </tr>
                                 {% endif %}
-                                <!-- <tr>
-                                    <td class="profile_title">이메일</td>
-                                    <td class="profile_content"><div class="mb-4 md-form" style="margin-bottom:-20px; margin-top:-10px;">{{ user_change_form.email }}</div></td>
-                                </tr>
-                                <tr>
-                                    <td class="profile_title">이름</td>
-                                    <td class="profile_content"><div class="mb-4 md-form" style="margin-bottom:-20px; margin-top:-10px;">{{ user_change_form.name }}</div></td>
-                                </tr>
-                                <tr>
-                                    <td class="profile_title">연락처</td>
-                                    <td class="profile_content"><div class="mb-4 md-form" style="margin-bottom:-20px; margin-top:-10px;">{{ user_change_form.hp }}</div></td>
-                                </tr>
-                                <tr>
-                                    <td class="profile_title">학번</td>
-                                    <td class="profile_content"><div class="mb-4 md-form" style="margin-bottom:-20px; margin-top:-10px;">{{ user_change_form.student_id }}</div></td>
-                                </tr>
-                                <tr>
-                                    <td class="profile_title">학년</td>
-                                    <td class="profile_content"><div class="mb-4 md-form" style="margin-bottom:-20px; margin-top:-10px;">{{ user_change_form.grade }}</div></td>
-                                </tr> -->
                                 <tr>
                                     <td class="profile_title">이메일</td>
                                     <td class="profile_content">&nbsp;&nbsp;{{ user.email }}</td>
@@ -74,19 +54,19 @@
                                     <td class="profile_title">학년</td>
                                     <td class="profile_content">{{ user_change_form.grade }}</td>
                                 </tr>
-                                {% if user.department == '컴퓨터공학부' %}
+                                {% if user.department == '컴퓨터공학과' %}
                                 <tr>
                                     <td class="profile_title">동아리</td>
                                     <td class="profile_content">{{ user_change_form.circles }}</td>
                                 </tr>
-                                {% elif user.department != '컴퓨터공학부' %}
+                                {% elif user.department != '컴퓨터공학과' %}
                                 <tr>
                                     <td class="profile_title">학과</td>
                                     <td class="profile_content">{{ user_change_form.department }}</td>
                                 </tr>
                                 {% endif %}
                             </table>
-                            {% if user.department == '컴퓨터공학부' %}
+                            {% if user.department == '컴퓨터공학과' %}
                             <script type="text/javascript">
                                 cs_update(this.form)
 
@@ -95,7 +75,7 @@
                                     // document.getElementsByName('student_id')[0].setAttribute('required', 'True')
                                 }
                             </script>
-                            {% elif user.department != '컴퓨터공학부' %}
+                            {% elif user.department != '컴퓨터공학과' %}
                             <script type="text/javascript">
                                 form_update(this.form)
 
@@ -120,28 +100,7 @@
                         </script>
 
 
-                        <!-- <form method="POST">
-                            {% csrf_token %}
-                            아이디 : {{ user.user_id }}<br><br>
-                            학과 : {{ user.department }}<br><br>
-                            {{ user_change_form.as_p }}
-
-                            {% if user.department == '컴퓨터공학부' %}
-                            <script type="text/javascript">
-                                cs_update(this.form)
-
-                                function cs_update(form) {
-                                    document.getElementsByTagName('option')[0].remove();
-                                    document.getElementsByName('name')[0].setAttribute('required', 'True')
-                                    document.getElementsByName('student_id')[0].setAttribute('required', 'True')
-                                }
-                            </script>
-                            동아리 : {{ user.circles }}
-                            {% endif %}<br><br>
-
-                            <button type="submit" class="btn btn-sm" id="detail_btn"><i class="fas fa-check"></i>&nbsp;수정하기</button>
-                        </form> -->
-
+                        
                     </div>
                 </div>
             </div>

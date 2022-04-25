@@ -58,7 +58,7 @@ def main_view(request):
     return render(request, 'users/main.html', context)
 
 # 로그인
-# @method_decorator(logout_message_required, name='dispatch')
+@method_decorator(login_message_required, name='dispatch')
 class LoginView(FormView):
     template_name = 'users/login.html'
     form_class = LoginForm
@@ -67,15 +67,17 @@ class LoginView(FormView):
     def form_valid(self, form):
         user_id = form.cleaned_data.get("user_id")
         password = form.cleaned_data.get("password")
-        user = authenticate(self.request, username=user_id, password = password)
 
+        user = authenticate(self.request, username=user_id, password=password)
         if user is not None:
             self.request.session['user_id'] = user_id
             login(self.request, user)
+
+
             remember_session = self.request.POST.get('remember_session', False)
             if remember_session:
                 settings.SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-
+            
         return super().form_valid(form)
 
 # 로그아웃
@@ -143,16 +145,16 @@ class RegisterView(CsRegisterView):
 def profile_delete_view(request):
     if request.method == 'POST':
         password_form = CheckPasswordForm(request.user, request.POST)
-
+        
         if password_form.is_valid():
             request.user.delete()
             logout(request)
-            messages.success(request, '회원탈퇴가 완료되었습니다.')
-            return redirect('/users/login')
-        else:
-            password_form = CheckPasswordForm(request.user)
-        
-        return render(request, 'users/profile_delete.html',{'password_form': password_form})
+            messages.success(request, "회원탈퇴가 완료되었습니다.")
+            return redirect('/')
+    else:
+        password_form = CheckPasswordForm(request.user)
+
+    return render(request, 'users/profile_delete.html', {'password_form':password_form})
 
 
 # 비밀번호 변경
@@ -265,7 +267,7 @@ def auth_pw_reset_view(request):
     
 
 # 개인정보 동의
-# @method_decorator(logout_message_required, name='dispatch')
+@method_decorator(logout_message_required, name='dispatch')
 class AgreementView(View):
     def get(self, request, *agrs, **kwargs):
         request.session['agreement'] = False
@@ -312,9 +314,10 @@ def profile_view(request):
 # 프로필 수정
 @login_message_required
 def profile_update_view(request):
+    
     if request.method == 'POST':
         if request.user.department == '컴퓨터공학과':
-            user_change_form = CustomCsUserChangeForm(request.POST, instance = request.user)
+            user_change_form = CustomCsUserChangeForm(request.POST, instance=request.user)
         else:   
             user_change_form = CustomUserChangeForm(request.POST, instance = request.user)
 
@@ -327,8 +330,10 @@ def profile_update_view(request):
             user_change_form = CustomCsUserChangeForm(instance = request.user)
         else:   
             user_change_form = CustomUserChangeForm(instance = request.user)
+        return render(request, 'users/profile_update.html', {
+            'user_change_form':user_change_form,
+            })
 
-        return render(request, 'users/profile_update.html', {'user_change_form':user_change_form})
 
 
 

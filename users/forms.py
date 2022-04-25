@@ -74,7 +74,7 @@ class CsRegisterForm(UserCreationForm):
     def save(self, commit=True):
         user = super(CsRegisterForm, self).save(commit=False)
         user.level = '2'
-        user.department = '컴퓨터공학부'
+        user.department = '컴퓨터공학과'
         user.is_active = False
         user.save()
 
@@ -202,21 +202,22 @@ class CustomUserChangeForm(UserChangeForm):
     )
        
     class Meta:
-        model = Member()
+        model = get_user_model()
         fields = ['hp', 'name', 'student_id', 'grade', 'department']
+
 
 
 # 컴공회원정보 수정
 class CustomCsUserChangeForm(UserChangeForm):
-    password = None
+    password = None        
     hp = forms.IntegerField(label='연락처', widget=forms.NumberInput(
-        attrs={'class': 'form-control', 'maxlength':'11', 'oninput':'maxLengthCheck(this)',}),
-        )
-    name = forms.CharField(label='이름',widget=forms.TextInput(
-        attrs={'class': 'form-control', 'maxlength':'8',}),
-    )
+        attrs={'class': 'form-control', 'maxlength':'11', 'oninput':"maxLengthCheck(this)",}), 
+    )        
+    name = forms.CharField(label='이름', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'maxlength':'8',}), 
+    )        
     student_id = forms.IntegerField(label='학번', widget=forms.NumberInput(
-        attrs={'class': 'form-control', 'maxlength':'8', 'oninput':'maxLengthCheck(this)',}),
+        attrs={'class': 'form-control', 'maxlength':'8', 'oninput':"maxLengthCheck(this)",}), 
     )
     grade = forms.ChoiceField(choices=GRADE_CHOICES, label='학년', widget=forms.Select(
         attrs={'class': 'form-control',}), 
@@ -226,8 +227,8 @@ class CustomCsUserChangeForm(UserChangeForm):
     )
 
     class Meta:
-        model = Member()
-        fields = ['hp','name','student_id','grade','circles']
+        model = Member
+        fields = ['hp', 'name', 'student_id', 'grade', 'circles']
 
 # 회원탈퇴 폼
 class CheckPasswordForm(forms.Form):
