@@ -27,8 +27,8 @@ urlpatterns = [
     path('profile/delete/', views.profile_delete_view, name='profile_delete'),
     path('profile/password', views.password_edit_view, name='password_edit'),
     #아이디 찾기
-    path('recovery/id', views.RecoverIdView.as_view(), name='recovery_id'),
-    path('recovery/id/find', views.ajax_find_id_view, name='ajax_id'),
+    path('recovery/id/', views.RecoveryIdView.as_view(), name='recovery_id'),
+    path('recovery/id/find/', views.ajax_find_id_view, name='ajax_id'),
     #비밀번호 찾기
     path('recovery/pw/', views.RecoveryPwView.as_view(), name='recovery_pw'),
     path('recovery/pw/find/', views.ajax_find_pw_view, name='ajax_pw'),

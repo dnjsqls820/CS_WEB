@@ -173,3 +173,5 @@ DEFAULT_FROM_MAIL = 'dnjsqls820'
 #로그인 상태 유지
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

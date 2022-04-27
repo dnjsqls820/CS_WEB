@@ -253,26 +253,31 @@ class CheckPasswordForm(forms.Form):
 
 
 
-
-# 아이디 찾기 Ajax
-class RecoveryIdFrom(forms.Form):
-    name = forms.CharField(widget=forms.TextInput,)
-    email = forms.EmailField(widget=forms.EmailInput,)
+# 아이디찾기 폼
+class RecoveryIdForm(forms.Form):
+    name = forms.CharField(
+        widget=forms.TextInput,
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput,
+    )
 
     class Meta:
         fields = ['name', 'email']
 
     def __init__(self, *args, **kwargs):
-        super(RecoveryIdFrom, self).__init__(*args, **kwargs)
-        self.fields['name'].label = '이름' 
+        super(RecoveryIdForm, self).__init__(*args, **kwargs)
+        self.fields['name'].label = '이름'
         self.fields['name'].widget.attrs.update({
-            'class' : 'form-control',
-            'id' :'form_name',
+            # 'placeholder': '이름을 입력해주세요',
+            'class': 'form-control',
+            'id': 'form_name',
         })
         self.fields['email'].label = '이메일'
         self.fields['email'].widget.attrs.update({
-            'class' : 'form-control',
-            'id' : 'form_email'
+            # 'placeholder': '이메일을 입력해주세요',
+            'class': 'form-control',
+            'id': 'form_email' 
         })
 
 # 비밀번호 찾기 Ajax
