@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'notice',
     'free',
     'coocr',
+    'instagram',
 ]
 
 MIDDLEWARE = [

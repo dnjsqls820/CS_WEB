@@ -25,4 +25,5 @@ urlpatterns = [
     path('notice/', include('notice.urls')),
     path('free/', include('free.urls')),
     path('coocr/', include('coocr.urls')),
+    path('instagram/', include('instagram.urls')),
 ]
