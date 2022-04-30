@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'users',
     'notice',
     'free',
+    'coocr',
 ]
 
 MIDDLEWARE = [

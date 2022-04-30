@@ -1,0 +1,60 @@
+{% extends "users/main_base.html" %}
+{% block mobileView %}
+<meta name="viewport" content="width=800, user-scalable=yes">
+{% endblock %}
+
+{% block contents %}
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-12">
+            <h4 style="font-weight: bold;">OCR</h4>
+            {% if q %}
+            <h5 style="color: gray; font-weight: 550;"><i class="fas fa-search"></i>&nbsp;'{{ q }}' 검색 결과입니다.</h5>
+            {% endif %}
+        </div>
+    </div>
+<div>
+    <body>
+        <form action="./coocr_upload"; method="post" name="image" id="Coauthform" enctype="multipart/form-data">
+            {% csrf_token%}
+            <input type="file"  name="uploadfile" id="uploadfile" />
+            <button class="btn btn-sm" onclick="uploadFile();">Read</button>
+        </form>
+        <script>
+            function uploadFile(){
+                document.getElementById("image").submit();
+            }
+        </script>
+    <div style="margin:50px 0;">
+        <table width="100%">
+            <tr>
+                <td width="50%">
+                    {% if imgname == '' %}
+                    이미지를 READ해주세요.
+                    {% else %}
+                    <img method="post" src="/static/source/{{imgname}}" style="width:90%;" />
+                    {% endif %}
+                </td>
+                <td width="50%">
+                    <pre>
+                        {{resulttext}}
+                    </pre>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        function search(){
+             document.getElementById("contes").submit();
+            }
+    </script>
+    <form id="contes" name="contes" action="search" method="post">
+        {% csrf_token %}
+        <!-- <button onclick="search(); location.href='search' ">Search</button> -->
+        <input type="text" name="result" value="{{resulttext}}">
+        <button type="button" onclick="search(); ">Search</button>
+    </form>
+</body>
+</div>
+</div>
+{% endblock %}

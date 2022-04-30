@@ -1,0 +1,50 @@
+{% extends "users/main_base.html" %}
+{% block title%}upload{% endblock%}
+
+{% block content%}
+<body>
+<form action="./coocr_upload"; method="post" name="image" id="Coauthform" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="uploadfile" id="uploadfile" />
+    <button onclick="uploadFile();">Read</button>
+</form>
+<script>
+    function uploadFile(){
+        document.getElementById("image").submit();
+    }
+</script>
+<!-- <div style="margin:50px 0;">
+    <button onclick="uploadFile();">READ</button>
+</div> -->
+<div style="margin:50px 0;">
+    <table width="100%">
+        <tr>
+            <td width="50%">
+                {% if imgname == '' %}
+                이미지를 READ해 주세요.
+                {% else %}
+                <img method="post" src="/static/source/{{imgname}}" style="width:90%;" />
+                {% endif %}
+            </td>
+            <td width="50%">
+                <pre>
+                {{resulttext}}
+                </pre>
+            </td>
+        </tr>
+    </table>
+</div>
+<script>
+    function search(){
+         document.getElementById("contes").submit();
+        }
+</script>
+<form id="contes" name="contes" action="search" method="post">
+    {% csrf_token %}
+    <!-- <button onclick="search(); location.href='search' ">Search</button> -->
+    <input type="text" name="result" value="{{resulttext}}">
+    <button type="button" onclick="search(); ">Search</button>
+</form>
+</body>
+{% endblock %}
+</html>

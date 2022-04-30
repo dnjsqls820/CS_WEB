@@ -143,10 +143,11 @@ class RegisterView(CsRegisterView):
 # 회원탈퇴
 @login_message_required
 def profile_delete_view(request):
+    free = Free.objects.filter(writer=request.user.id)
     if request.method == 'POST':
-        password_form = CheckPasswordForm(request.user, request.POST)
-        
+        password_form = CheckPasswordForm(request.user, request.POST,)
         if password_form.is_valid():
+            free.delete()
             request.user.delete()
             logout(request)
             messages.success(request, "회원탈퇴가 완료되었습니다.")

@@ -82,7 +82,7 @@
                 <br>
                 {% endif %}
                 {% else %}
-                <p>이 유저는 로그아웃 되어 있습니다..</p>
+                <p>로그인 후 사용가능합니다.</p>
                 
                 <a href="{% url 'users:login' %}">로그인</a>&nbsp;&middot;
                 <a href="{% url 'users:agreement' %}">회원가입</a>
@@ -128,10 +128,10 @@
                     </li>
                     <li>
                         <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle menu3"><i
-                                class="fas fa-graduation-cap"></i>&nbsp;&nbsp;학사정보</a>
+                                class="fas fa-graduation-cap"></i>&nbsp;&nbsp;Projects</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu2">
                             <li>
-                                <a href=""><i class="fas fa-calendar-check"></i>&nbsp;&nbsp;학사일정</a>
+                                <a href="{% url 'coocr:coocr' %}"><i class="fas fa-calendar-check"></i>&nbsp;&nbsp;OCR</a>
                             </li>
                             <li>
                                 <a href=""><i class="fas fa-table"></i>&nbsp;&nbsp;시험시간표</a>
