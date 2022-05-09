@@ -1,5 +1,5 @@
 {% extends "users/main_base.html" %}
-
+{% load humanize %}
 
 {% block mobileView %}
 <meta name="viewport" content="width=800, user-scalable=yes">
@@ -9,7 +9,8 @@
 <div class="container">
     <div class="row mt-5">
         <div class="col-12">
-            <h4 style="font-weight: bold;">인스타그램</h4>
+            <a style="float: right;" class="nav-link" href="{% url 'instagram:photo_create' %}">게시글 작성<span class="sr-only">(current)</span></a>
+            <h4 style="font-weight: bold;">DDoStagram</h4>
         </div>
     </div>
     <div>
@@ -21,14 +22,10 @@
                             <!-- <div class="col"></div> -->
                             <div class="col-5">
                                 {% for object in object_list %}
-                    
                                 <div class="card">
                                     <div class="card-header">
-                                        {{ object.writer }}
+                                        <a href="{% url 'instagram:photo_detail' object.id %}">{{object.writer }}</a>
                                     </div>
-                                    {% if object.image %}
-                                    <img src="{{ object.image.path }}" class="card-img-top" alt="...">
-                                    {% endif %}
                                     <div class="card-body">
                                         <p class="card-text"> {{ object.content | safe }} </p>
                                     </div>
@@ -41,37 +38,34 @@
                                                 {{object.like.all.count}}
                                             </span>
                                             {% endif %}
-
                                         </li>
                                         <li class="list-group-item">생성일 : {{ object.created }}</li>
                                     </ul>
                                     <div class="card-body">
-                                        <a href="{% url 'instagram:photo_detail' object.id %}" class="card-link">댓글달기</a>
-                                        {% if user == object.author%}
-                                        <a href="{% url 'instagram:update' object.id %}" class="card-link">수정하기</a>
-                                        <a href="{% url 'instagram:photo_delete' object.id %}" class="card-link">삭제하기</a>
-                                        {% endif%}
-                    
-                                    </div>
-                    
-                                </div>
-                                {% endfor %}
-                    
-                            </div>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="text-center" style="cursor:pointer;">
-                    <hr width = "100%" color = "Black" size = "5">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'instagram:photo_create' %}">사진 올리기<span class="sr-only">(current)</span></a>
-                    </li>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
-</div>
+                                    <a href="{% url 'instagram:photo_detail' object.id%}" class="card-link">댓글달기</a>
+                                                {% if user == object.writer%}
+                                                <a href="{% url 'instagram:photo_update' object.id %}" class="card-link">수정하기</a>
+                                                <a href="{% url 'instagram:photo_delete' object.id %}" class="card-link">삭제하기</a>
+                                                {% endif%}
 
+                                            </div>
+
+                                        </div>
+                                        
+
+                                    </div>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                    <!-- <script type="text/javascript">
+                        function deleteModal() {
+                            location.replace('/free/{{ photo.id }}/delete/');
+                        }
+                    </script> -->
+{% endfor %}
 {% endblock %}
