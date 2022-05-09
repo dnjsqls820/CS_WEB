@@ -54,7 +54,7 @@ class PhotoDetail(DetailView):
     def get_context_data(self, **kwargs):
         # 기본 구현을 호출해 context를 가져온다.
         context = super(PhotoDetail, self).get_context_data(**kwargs)
-        # 모든 책을 쿼리한 집합을 context 객체에 추가한다.
+        # 모든 댓글 쿼리한 집합을 context 객체에 추가한다.
         context['commits'] = Commit.objects.all()
         return context
 
@@ -64,30 +64,31 @@ class PhotoUpdate(UpdateView):
     fields = ['content']
     context_object_name = 'instagram_update'
     template_name_suffix = '_update'
-    success_url = '/'
+    success_url = '/instagram/'
 
     def dispatch(self, request, *args, **kwargs):
         object = self.get_object()
-        if object.writer != request.user:
-            messages.warning(request, '수정할 권한이 없습니다.')
-            return HttpResponseRedirect('instagram:photo_list')
-        else:
+        if object.writer == request.user or request.user.level=='1' or request.user.level=='0':
             return super(PhotoUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            messages.warning(request, '수정할 권한이 없습니다.')
+            return HttpResponseRedirect('/instagram/')
 
 
 @method_decorator(login_message_required, name='dispatch')
 class PhotoDelete(DeleteView):
     model = Photo
     template_name_suffix = '_delete'
-    success_url = '/'
+    success_url = '/instagram/'
 
     def dispatch(self, request, *args, **kwargs):
         objects = self.get_object()
-        if objects.writer != request.user:
-            messages.warning(request, '삭제할 권한이 없습니다.')
-            return HttpResponseRedirect('instagram:photo_list')
-        else:
+        if objects.writer == request.user or request.user.level=='1' or request.user.level=='0':
             return super(PhotoDelete, self).dispatch(request, *args, **kwargs)
+        else:
+            messages.warning(request, '삭제할 권한이 없습니다.')
+            return HttpResponseRedirect('/instagram/')
+            
 
 @method_decorator(login_message_required, name='dispatch')
 class PhotoLike(View):

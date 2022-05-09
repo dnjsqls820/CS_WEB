@@ -20,8 +20,8 @@ urlpatterns = [
     path('create/', PhotoCreate.as_view(), name='photo_create'),
     path('mylist/', views.photo_my_list, name='photo_mylist'),
     path('detail/<int:pk>', PhotoDetail.as_view(), name='photo_detail'),
-    path('update/<int:pk>', PhotoUpdate.as_view(), name='photo_update'),
-    path('delete/<int:pk>', PhotoDelete.as_view(), name='photo_delete'),
+    path('update/<int:pk>/', PhotoUpdate.as_view(), name='photo_update'),
+    path('delete/<int:pk>/', PhotoDelete.as_view(), name='photo_delete'),
     path('like/<int:photo_id>/', PhotoLike.as_view(), name='photo_like'),
     
     path('<int:pk>/commit/writer', views.photo_commit, name='commit_write'),
