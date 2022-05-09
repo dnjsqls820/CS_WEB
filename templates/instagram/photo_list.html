@@ -9,7 +9,7 @@
 <div class="container">
     <div class="row mt-5">
         <div class="col-12">
-            <a style="float: right;" class="nav-link" href="{% url 'instagram:photo_create' %}">게시글 작성<span class="sr-only">(current)</span></a>
+            <a style="float: right;" class="btn btn-sm" href="{% url 'instagram:photo_create' %}">게시글 작성<span class="sr-only">(current)</span></a>
             <h4 style="font-weight: bold;">DDoStagram</h4>
         </div>
     </div>
@@ -24,10 +24,10 @@
                                 {% for object in object_list %}
                                 <div class="card">
                                     <div class="card-header">
-                                        <a href="{% url 'instagram:photo_detail' object.id %}">{{object.writer }}</a>
+                                        {{object.writer}}
                                     </div>
                                     <div class="card-body">
-                                        <p class="card-text"> {{ object.content | safe }} </p>
+                                        <p class="card-text"><a href="{% url 'instagram:photo_detail' object.id %}">{{ object.content | safe }}</p></a>
                                     </div>
                                     <ul class="list-group list-group-flush">
                     
@@ -43,16 +43,8 @@
                                     </ul>
                                     <div class="card-body">
                                     <a href="{% url 'instagram:photo_detail' object.id%}" class="card-link">댓글달기</a>
-                                                {% if user == object.writer%}
-                                                <a href="{% url 'instagram:photo_update' object.id %}" class="card-link">수정하기</a>
-                                                <a href="{% url 'instagram:photo_delete' object.id %}" class="card-link">삭제하기</a>
-                                                {% endif%}
-
                                             </div>
-
                                         </div>
-                                        
-
                                     </div>
                                     </tr>
                                 </thead>

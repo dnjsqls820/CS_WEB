@@ -34,8 +34,6 @@
                 <li class="list-group-item">생성일 : {{ object.created }}</li>
                 <li class="list-group-item">
                     <!--댓글-->
-                    <div class="card" style="width: 100%;">
-                        <div class="card-header">
                             <div class="col-md-12">
                                 {% csrf_token %}
                                 <div class="form-group row">
@@ -47,8 +45,8 @@
                             </div>
                             <br>
                             {% if photo.commits %}
-                            <div id="hide_more_button"><strong><a id=hide_button_count style="color:black;">&nbsp;댓글 접기 &middot;&nbsp;{{ object.commits }}개의 댓글<br></a></strong></div>
-                            <div id="show_more_button" style="display:none;"><strong><a id=show_button_count style="color:black;">&nbsp;댓글 펼치기 &middot;&nbsp;{{ object.commits }}개의 댓글<br></a></strong></div>
+                            <div id="hide_more_button"><strong><a id=hide_button_count style="color:black;">&nbsp;댓글 접기 &middot;&nbsp;{{ photo.commits }}개의 댓글<br></a></strong></div>
+                            <div id="show_more_button" style="display:none;"><strong><a id=show_button_count style="color:black;">&nbsp;댓글 펼치기 &middot;&nbsp;{{ photo.commits }}개의 댓글<br></a></strong></div>
                             {% else %}
                             <div id="hide_more_button"><strong><a id=hide_button_count style="color:black;"><br></a></strong></div>
                             <div id="show_more_button" style="display:none;"><strong><a id=show_button_count style="color:black;"><br></a></strong></div>
@@ -188,8 +186,8 @@
                                 <input type="hidden" id="commit_writer" value={{request.user}}>
                                 <div id="commit_list"></div>
                             </div>
-                        </div>
-                    </div>
+                        
+                    
                     
                     <div class="card-body">
                         
@@ -197,8 +195,29 @@
                 </li>
             </ul>
             <div class="card-body">
-                <a href="{% url 'instagram:photo_update' object.id %}" class="card-link">수정하기</a>
-                <a href="{% url 'instagram:photo_delete' object.id %}" class="card-link">삭제하기</a>
+                {% if request.user == object.writer or request.user.level == '0' %}
+                <button class="btn btn-sm" id="detail_btn" onclick="location.href='/instagram/update/{{ object.id }}'">수정</button>
+                <button class="btn btn-sm" id="detail_btn" data-toggle="modal" data-target="#delete_modal">삭제</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div id="delete_modal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">삭제경고</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>게시글을 삭제하시겠습니까?</p>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="delete_modal()" type="button" class="btn btn-dark">삭제하기</button>
+                    <button type="button" class="btn btn-light" data-dismiss="modal">취소하기</button>
+                </div>
             </div>
         </div>
     </div>
@@ -206,6 +225,15 @@
     <div class="col"></div>
 </div>
 <script type="text/javascript">
+    //게시글 삭제
+    $(document).ready(function () {
+        $('img').css('width', '100%');
+    });
+
+    function delete_modal() {
+        location.replace('/instagram/delete/{{ object.id }}/');
+    }
+    // 댓글
     $(document).ready(function () {
         $('img').css('width', '100%');
 
