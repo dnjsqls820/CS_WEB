@@ -1,0 +1,110 @@
+{% extends "users/main_base.html" %}
+{% load humanize %}
+
+{% block mobileView %}
+<meta name="viewport" content="width=800, user-scalable=yes">
+{% endblock %}
+
+{% block contents %}
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-6">
+            <h4 style="font-weight: bold;">Todo</h4>
+        </div>
+    </div>
+    <div>
+        <table class="table table-sm ">
+            <thead style="border-top: 1px solid #dee2e6;">
+                <tr class="text-center">
+                    <th style="font-weight: bold; font-size: 16px;">번호</th>
+                    <th style="font-weight: bold; font-size: 16px;">내용</th>
+                    <th style="font-weight: bold; font-size: 16px;">작성자</th>
+                    <th style="font-weight: bold; font-size: 16px;">등록일</th>
+                    <th style="font-weight: bold; font-size: 16px;"></th>
+                </tr>
+            </thead>
+            {% for todo in content %}
+                <form action="./{{todo.id}}/delete/" method="GET">
+                    <tbody>
+                        
+                        <tr class="text-center">
+                            <td style="font-weight: 500;">{{ todo.id }}</td>
+                            <td style="font-weight: 500;">{{ todo.content }}</td>
+                            <td style="font-weight: 500;">{{ todo.writer }}</td>
+                            <td style="font-weight: 500;">{{ todo.registered_date|date:'m월 d일' }}</td>
+                            <td style="font-weight: 500;"><button type="submit">완료</button></td>
+                            <input type="hidden" id="todoNum" name="todoNum" value="{{todo.id}}"></input>
+                        </tr>
+                    </tbody>
+                </form>
+            {% endfor %}
+        </table>
+    </div>
+    
+    <div style="margin-top: 30px;">
+        <form action="./create/" method="POST">{% csrf_token %}
+            <div class="col">
+                <div style="float: right;" class="form-row">
+                    <div class="form-row">
+
+                        <div class="col" style="margin-top: 10px;">
+                            <input type="text" name="Content" class="form-control form-control-md"
+                                style="width: 15em;" placeholder="메모할 내용을 적어주세요.">
+                        </div>
+                        <div class="col">
+                            <span class="input-group-btn">
+                                <button class="btn btn-sm" type="submit" id="search_btn">메모하기!</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <br>
+        <div class="col-md-offset-6">
+            {% if is_paginated %}
+            <!-- <ul class="pagination justify-content-center pagination-sm"> -->
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page_obj.previous_page_number }}"
+                        tabindex="-1" style="font-size: 15px;">이전</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" style="font-size: 15px;">이전</a>
+                </li>
+                {% endif %}
+
+                {% for page in page_range %}
+                <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
+                    <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page }}" style="font-size: 15px;">{{ page }}</a>
+                </li>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link"
+                        href="?type={{ type }}&q={{ q }}&page={{ page_obj.next_page_number }}" style="font-size: 15px;">다음</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" style="font-size: 15px;">다음</a>
+                </li>
+                {% endif %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    target = window.location.search.split('&')[0].split('=')[1]
+    var type = document.getElementsByTagName('option')
+    for (var i = 0; i < 5; i++) {
+        if (type[i].value === target) {
+            type[i].setAttribute('selected', 'selected')
+        }
+    }
+</script>
+{% endblock %}
