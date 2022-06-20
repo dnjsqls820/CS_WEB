@@ -1,0 +1,54 @@
+{% extends "users/main_base.html" %}
+{% load humanize %}
+{% load static %}
+
+{% block mobileView %}
+<meta name="viewport" content="width=800, user-scalable=yes">
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/timetable/timetable.css' %}" type="text/css">
+{% endblock %}
+
+{% block contents %}
+<br><br>
+<div class="container">
+    <h5><strong><i class="fas fa-comments"></i>&nbsp;회원관리</strong></h5>
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-bottom: -0.5px;">
+        <li class="nav-item">
+            <a class="nav-link active" id="free-comment-tab" data-toggle="tab" href="#free_comment" role="tab" aria-controls="free_comment" aria-selected="true">회원정보</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="free_comment" role="tabpanel" aria-labelledby="free-comment-tab">
+            <table class="table table-sm table-hover">
+                <thead style="border-top: 1px solid #dee2e6;">
+                    <tr class="text-center">
+                        <th class="all_view_title">회원 아이디</th>
+                        <th class="text-left all_view_title">학년</th>
+                        <th class="text-left all_view_title">학과</th>
+                        <th class="text-left all_view_title">생성날짜</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if member_list %}
+                        {% for member in member_list %}
+                        <tr class="text-center" style="font-weight: bold; cursor:pointer;" onclick="location.href='/user_admin/member/{{ member.id }}/'">
+                            <td class="all_view">{{ member.user_id }}</td>
+                            <td class="text-left all_view">{{ member.grade }}</td>
+                            <td class="text-left all_view">
+                            {{ member.department }}
+                            </td>
+                            <td class="text-left all_view">{{ member.date_joined|date:'y년 m월 d일' }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
