@@ -4,9 +4,11 @@ from users.models import Member
 # Create your views here.
 
 def Todo_list(request):
-    title = Todo.objects.all()
-    todo_list = {'content':title}
-    return render(request, 'todo/todo_list.html',todo_list)
+    todo_list = Todo.objects.filter(writer=request.user.id).order_by('-registered_date')
+    content = {
+        'todo_list': todo_list
+    }
+    return render(request, 'todo/todo_list.html',content)
 
 def Todo_create(request):
     user = request.session['user_id']
