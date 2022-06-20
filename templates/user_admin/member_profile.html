@@ -12,20 +12,16 @@
             <div class="row justify-content-center">
                 <div class="card">
                     <div class="card-header" style="padding-bottom:8px;">
-                        <strong style="font-size: 18px;"><i class="fas fa-user-cog"></i>&nbsp;&nbsp;내 정보</strong>
+                        <strong style="font-size: 18px;"><i class="fas fa-user-cog"></i>&nbsp;&nbsp;회원정보</strong>
                     </div>
                     <div class="card-body">
                         <table style="color:black; margin-left:10px;">
                             <tr>
                                 {% for member in member_list%}
                                 <td class="profile_title">아이디</td>
-                                {% if user.level == '0'%}
-                                <td class="profile_content">{{ member.user_id }}&nbsp;&nbsp;(개발자)</td>
-                                {% elif user.level == '1' %}
-                                <td class="profile_content">{{ member.user_id }}&nbsp;&nbsp;(관리자)</td>
-                                {% else %}
+                                
                                 <td class="profile_content">{{ member.user_id }}</td>
-                                {% endif %}
+                                
                             </tr>
                             <tr>
                                 <td class="profile_title">이메일</td>
