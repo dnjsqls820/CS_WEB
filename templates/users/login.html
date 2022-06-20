@@ -21,11 +21,13 @@
                         <div class="mb-4 md-form">
                             <label name="label_user_id" for="{{ form.user_id.id_for_label }}"><i class="fas fa-user"></i>&nbsp;&nbsp;{{ form.user_id.label }}</label>
                             {{ form.user_id }}
+                            <!--아이디가 공백이 아닌경우 공백으로 바꿔준다.-->
                             <script type="text/javascript">
                                 if (document.getElementsByName('user_id')[0].value != '') {
                                     document.getElementsByName('label_user_id')[0].setAttribute('class', 'active');
                                 }
                             </script>
+                            <!-- user_id에 에러메시지가 존재하면 에러메시지 출력-->
                             {% if form.user_id.errors %}
                             <script type="text/javascript">
                                 document.getElementsByName('user_id')[0].setAttribute('class',
@@ -61,7 +63,6 @@
                             <span style="padding-bottom: 35px;">로그인 상태 유지</span>
                         </label>
                         <br>
-                        <!-- <input type="checkbox" name="remember_session" > 로그인 상태 유지<br><br> -->
 
                         <button type="submit" style="opacity: 90%; font-size: 16px; margin-top: -5px;" class="btn btn-red btn-lg btn-block">로그인</button>
                     </form>

@@ -4,11 +4,9 @@
 <head>
     <title>DDoBin:Lab</title>
     <meta charset='utf-8'>
-    <!-- <meta name='viewport' content='width=device-width, initial-scale=1'> -->
     {% block mobileView %}
-    <!-- <meta name="viewport" content="width=800, user-scalable=yes"> -->
     {% endblock %}
-    <link rel="shortcut icon" href="{% static 'img/reborn_favicon.ico' %}">
+    <link rel="shortcut icon" href="{% static 'img/h_favicon.ico' %}">
     
     <!-- JQuery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -52,12 +50,9 @@
         <!--사이드바-->
         <nav id="sidebar">
             <div id="side_hide">
-                <!-- <div style="text-align: right;"> -->
+                
                 <div style="position:fixed; left: 273px; z-index:3;">
-                    <!-- <button type="button" id="sidebarCollapseHide" class="btn btn-primary" onclick="hide()" style="margin-bottom: -50px;">
-                        <i class="fa fa-chevron-left"></i>
-                        <span class="sr-only">Toggle Menu</span>
-                    </button> -->
+
                     <div id="sidebarCollapseHide" onclick="hide()"
                         style="margin-top: 15px; margin-right:15px; margin-bottom: -30px; cursor: pointer;">
                         <i class="fa fa-chevron-left fa-lg"></i>
@@ -109,9 +104,18 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- <li>
-                        <a href="#">About</a>
-                    </li> -->
+                    {% if user.level == '0' or user.level == '1' %}
+                    <li>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle menu5"><i
+                                class="fas fa-user" style="margin:0 2.5px;"></i>&nbsp;&nbsp;회원관리</a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li>
+                                <a href="{% url 'user_admin:member' %}"><i class="fas fa-user-cog"></i>&nbsp;&nbsp;회원</a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    {% endif %}
                     <li>
                         <a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle menu2"><i
                                 class="fas fa-pen" style="margin-right:4px;"></i>&nbsp;&nbsp;커뮤니티</a>
@@ -131,14 +135,14 @@
                                 class="fas fa-graduation-cap"></i>&nbsp;&nbsp;Projects</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu2">
                             <li>
-                                <a href="{% url 'coocr:coocr' %}"><i class="fas fa-calendar-check"></i>&nbsp;&nbsp;OCR</a>
+                                <a href="{% url 'Todo:todo_list' %}"><i class="fas fa-calendar-check"></i>&nbsp;&nbsp;Todo_list</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'coocr:coocr' %}"><i class="fas fa-table"></i>&nbsp;&nbsp;OCR</a>
                             </li>
                             <li>
                                 <a href="{% url 'instagram:photo_list' %}"><i class="fas fa-table"></i>&nbsp;&nbsp;DDoStagram</a>
                             </li>
-                            <!-- <li>
-                                <a href="#">Page 3</a>
-                            </li> -->
                         </ul>
                     </li>
                     <li>
@@ -157,7 +161,10 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="" target="_blank"><i class="fas fa-robot"></i>&nbsp;&nbsp;챗봇연결</a>
+                        <a href="{% url 'coocr:coocr' %}"><i class="fas fa-robot"></i>&nbsp;&nbsp;OCR</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'Todo:todo_list' %}"><i class="fas fa-calendar-check"></i>&nbsp;&nbsp;Todo</a>
                     </li>
                 </ul>
 
@@ -189,10 +196,7 @@
                 </div>
 
                 <div class="container-fluid">
-                    <!-- <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                        <i class="fa fa-bars"></i>
-                        <span class="sr-only">Toggle Menu</span>
-                    </button> -->
+                    
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">

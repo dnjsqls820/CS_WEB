@@ -5,7 +5,7 @@
     <title>DDoBin:Lab</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" href="{% static 'img/reborn_favicon.ico' %}">
+    <link rel="shortcut icon" href="{% static 'img/h_favicon.ico' %}">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700" rel="stylesheet"> <!--필수-->
     <link rel="stylesheet" href="{% static 'css/index/bootstrap.min.css' %}"> <!--필수-->
   
@@ -52,12 +52,6 @@
               </div>
             </div>
             <div class="col-6 text-right">
-              <!-- <div class="mr-auto"> -->
-                <!-- <a href="#" class="p-2 pl-0"><span class="icon-twitter"></span></a> -->
-                <!-- <a href="#" class="p-2 pl-0"><span class="icon-linkedin"></span></a> -->
-                <!-- <a href="#" class="p-2 pl-0"><span class="icon-facebook"></span></a> -->
-                <!-- <a href="#" class="p-2 pl-0"><span class="icon-instagram"></span></a> -->
-              <!-- </div> -->
             </div>
           </div>
         </div>
@@ -87,28 +81,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="https://ctl.honam.ac.kr/" target="_blank" style="font-weight: 600;">호남대 교수학습지원 센터</a>
                     </li>
-                    <!-- <li><a href="#home-section" class="nav-link">Home</a></li>
-                    <li><a href="#classes-section" class="nav-link">Classes</a></li>
-                    <li class="has-children">
-                      <a href="classes.html" class="nav-link">Pages</a>
-                      <ul class="dropdown arrow-top">
-                        <li><a href="team.html" class="nav-link">Team</a></li>
-                        <li><a href="pricing.html" class="nav-link">Pricing</a></li>
-                        <li><a href="faq.html" class="nav-link">FAQ</a></li>
-                        <li class="has-children">
-                          <a href="#">More Links</a>
-                          <ul class="dropdown">
-                            <li><a href="#">Menu One</a></li>
-                            <li><a href="#">Menu Two</a></li>
-                            <li><a href="#">Menu Three</a></li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
-                    <li><a href="#about-section" class="nav-link">About</a></li>
-                    <li><a href="#events-section" class="nav-link">Events</a></li>
-                    <li><a href="#gallery-section" class="nav-link">Gallery</a></li>
-                    <li><a href="#contact-section" class="nav-link">Contact</a></li> -->
                   </ul>
                 </div>
               </nav>
@@ -118,19 +90,13 @@
       </div>
     </div>
   
-    <div class="site-blocks-cover overlay" style="background-image: url('{{ STATIC_URL }}img/logo1.jpg')" data-aos="fade" data-stellar-background-ratio="0.5"id="home-section">
+    <div class="site-blocks-cover overlay" style="background-color: gray;" data-aos="fade" data-stellar-background-ratio="0.5"id="home-section">
       <div class="container">
         <div class="row align-items-center text-center justify-content-center">
           <div class="col-md-8">
            
             <h1 class="font-weight-bold">DDoBin:Lab</h1>
             <p class="sub-text mb-4 d-block">호남대학교 컴퓨터공학부 홈페이지</p>
-             <!-- <a data-fancybox data-ratio="2" href="https://vimeo.com/332538199" class="d-inline-flex align-items-center">
-              <span class="play-button d-block mr-3">
-                <span class="icon-play"></span>
-              </span>
-              <span class="text-white">Watch the video</span>
-            </a> -->
             {% if user.is_authenticated %}
             <button onclick="location.href='/users/main/'">마이페이지</button>
             <button onclick="location.href='/users/logout/'">로그아웃</button>
@@ -151,7 +117,6 @@
           <div class="row mb-5">
             <div class="col-md-7 text-left heading-wrap mb-5">
               <h2 class="mt-0">DDoBin:Lab</h2>
-              <!-- <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p> -->
               <p>호남대학교 이원빈짱</p>
             </div>
             
@@ -163,14 +128,10 @@
           <div class="row no-gutters">
             <div class="col-md-6">
               <div class="sched d-block d-lg-flex">
-                <div class="bg-image order-2" style="background-image: url('/static/img/index/free.jpg')"></div>
+                <div class="bg-image order-2" style="background-image: url('/static/img/index/free_1.jpg')"></div>
                 <div class="text order-1">
                   <h3 style="font-weight: bold;">자유게시판</h3>
                   <p>컴퓨터공학과의 자유게시판입니다. 여러 가지 질문을 올릴 수 있는 질문카테고리, 세미나 또는 정보 공유가 가능한 정보 카테고리로 나누어져 있습니다.</p>
-                  <!-- <p class="sched-time">
-                    <span><span class="fa fa-clock-o"></span> 5:30 PM</span> <br>
-                    <span><span class="fa fa-calendar"></span> April 22, 2019</span> <br>
-                  </p> -->
                   <p><a href="/free/" class="btn btn-primary btn-sm">바로가기</a></p>
                   
                 </div>
@@ -178,14 +139,11 @@
               </div>
 
               <div class="sched d-block d-lg-flex">
-                <div class="bg-image" style="background-image: url('/static/img/index/anonymous.jpg')"></div>
+                <div class="bg-image" style="background-image: url('/static/img/index/ocr.jpg')"></div>
                 <div class="text">
                   <h3 style="font-weight: bold;">이미지 텍스트 추출</h3>
                   <p>사진에 있는 이미지를 추출하고 추출 데이터를 지도로 옮겨줘 길찾기 기능을 사용하실수 있습니다.</p>
-                  <!-- <p class="sched-time">
-                    <span><span class="fa fa-clock-o"></span> 5:30 PM</span> <br>
-                    <span><span class="fa fa-calendar"></span> April 22, 2019</span> <br>
-                  </p> -->
+
                   <p><a href="/coocr/" class="btn btn-primary btn-sm">바로가기</a></p>
                   
                 </div>
@@ -196,21 +154,26 @@
 
             <div class="col-md-6">
               <div class="sched d-block d-lg-flex">
-                <div class="bg-image order-2" style="background-image: url('/static/img/index/chatbot.jpg')"></div>
+                <div class="bg-image order-2" style="background-image: url('/static/img/index/ddostagram.jpg')"></div>
                 <div class="text order-1">
                   <h3 style="font-weight: bold;">DDoStagram</h3>
                   <p>인스타그램을 모티브로 한 또스타그램 입니다.</p>
-                  <!-- <p class="sched-time">
-                    <span><span class="fa fa-clock-o"></span> 5:30 PM</span> <br>
-                    <span><span class="fa fa-calendar"></span> April 22, 2019</span> <br>
-                  </p> -->
                   <p><a href="{% url 'instagram:photo_list'%}" target="_blank" class="btn btn-primary btn-sm">바로가기</a></p>
-                  
                 </div>
                 
               </div>
 
-               
+              <div class="sched d-block d-lg-flex">
+                <div class="bg-image" style="background-image: url('/static/img/index/todo.jpg')"></div>
+                <div class="text">
+                  <h3 style="font-weight: bold;">Todo-List</h3>
+                  <p>오늘의 일정을 입력할수 있습니다.</p>
+
+                  <p><a href="/Todo/" class="btn btn-primary btn-sm">바로가기</a></p>
+                  
+                </div>
+                
+              </div>
 
             </div>
           </div>

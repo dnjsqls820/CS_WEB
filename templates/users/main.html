@@ -19,19 +19,19 @@
         <div class="container" id="carouselMinBtn" style="width: 91%; float:left; padding: 0 !important">
         <!-- <div class="container" style="width: 83%; float:left;"> -->
             <div class="owl-carousel centernonloop">
-                <a href="" target="_blank" class="item-class">
+                <a href="{% url 'free:free_list' %}" target="_blank" class="item-class">
                     <div class="text" style="text-align: center;">
-                        <h5 class="class-heading carouselFont"><i class="fas fa-notes-medical"></i>&nbsp;추가</h5>
+                        <h5 class="class-heading carouselFont"><i class="fas fa-notes-medical"></i>&nbsp;자유게시판</h5>
                     </div>
                 </a>
-                <a href="" target="_blank" class="item-class">
+                <a href="{% url 'instagram:photo_list' %}" target="_blank" class="item-class">
                     <div class="text" style="text-align: center;">
-                        <h5 class="class-heading carouselFont"><i class="fas fa-user-check"></i>&nbsp;<span id="injeLink1">추가/span></h5>
+                        <h5 class="class-heading carouselFont"><i class="fas fa-user-check"></i>&nbsp;<span id="injeLink1">또스타그램</span></h5>
                     </div>
                 </a>
-                <a href="" target="_blank" class="item-class">
+                <a href="{% url 'coocr:coocr'%}" target="_blank" class="item-class">
                     <div class="text" style="text-align: center;">
-                        <h5 class="class-heading carouselFont"><i class="fas fa-user-graduate"></i>&nbsp;<span id="injeLink2">추가</span></h5>
+                        <h5 class="class-heading carouselFont"><i class="fas fa-user-graduate"></i>&nbsp;<span id="injeLink2">OCR</span></h5>
                     </div>
                 </a>
                 <a href="" target="_blank" class="item-class">
@@ -54,9 +54,9 @@
                         <h5 class="class-heading carouselFont"><i class="fas fa-bus"></i>&nbsp;추가</h5>
                     </div>
                 </a>
-                <a href="" target="_blank" class="item-class">
+                <a href="{% url 'notice:notice_list' %}" target="_blank" class="item-class">
                     <div class="text" style="text-align: center;">
-                        <h5 class="class-heading carouselFont"><i class="fas fa-utensils"></i>&nbsp;추가</h5>
+                        <h5 class="class-heading carouselFont"><i class="fas fa-utensils"></i>&nbsp;공지사항</h5>
                     </div>
                 </a>
             </div>
