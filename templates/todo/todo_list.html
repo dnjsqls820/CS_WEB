@@ -23,7 +23,8 @@
                     <th style="font-weight: bold; font-size: 16px;"></th>
                 </tr>
             </thead>
-            {% for todo in content %}
+            {% if todo_list %}
+            {% for todo in todo_list %}
                 <form action="./{{todo.id}}/delete/" method="GET">
                     <tbody>
                         
@@ -38,6 +39,7 @@
                     </tbody>
                 </form>
             {% endfor %}
+            {% endif %}
         </table>
     </div>
     
