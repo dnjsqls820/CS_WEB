@@ -25,13 +25,6 @@ CIRCLES_CHOICES = (
     
 )
 
-DEPARTMENT_CHOICES = (
-    ('미래자동차공학과','미래자동차공학과'),
-    ('토목공학과','토목공학과'),
-    ('전자공학과','전자공학과'),
-    ('소프트웨어공학과','소프트웨어공학과'),
-)
-
 # free App choiceField
 CATEGORY_CHOICES = (
     ('자유','자유'),
