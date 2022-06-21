@@ -2,16 +2,13 @@
 
 ## 1. 목적
 
-개발기록 포스팅입니디. 프로젝트를 진행하면서 공부한 내용과 개발한 과정을 기록해 나중에 까먹지 않도록 남길것입니다.
-
-Django에 대해 자세히 알진 못하기에 구현과정 중 틀린 부분 또는 Django Convention을 지키지 않았을 수도 있습니다.
+처음에 제가 속한 연구실의 홈페이지를 만들려고 기획하다 문득 우리 랩실 뿐만 아니라 다른 랩실도 사용할수 있는 홈페이지를 만들어 서로 정보를 공유하고 커뮤니케이션을 활성화 시키는 목적으로  이용자를 랩실 인원뿐만 아니라 컴퓨터공학과 학생들을 대상으로 사용할수 있는 cs_web을 구현했습니다.
 
 ## 2. 개발스택
 
 > - Backend : Django/python
 > - Frontend : Javascript, jQuery, Bootstarp4
 > - DB : Postgresql
-> - 서버 : Ubuntu 18.04, Nginx
 > - 버전관리 : Git
 
 ## 3. 개발환경
@@ -24,52 +21,54 @@ Django에 대해 자세히 알진 못하기에 구현과정 중 틀린 부분 �
 
 ## 4. 프로젝트 소개
 
-Django CRUD를 공부하면서 공부한 내용에 추가하고 싶은 기능을 추가하여 Django에 대해 공부하고 학과에서 사용할 수 있는 Django 프레임워크 기반의 학과 랩실 홈페이지 프로젝트입니다.
+Django를 공부하면서 개인 프로젝트를 하고싶어 컴퓨터공학과 학생들을 대상으로 사용할수 있는 cs_web을 구연했습니다. 또한 instagram클론코딩을 하면서 배운 기술로 DDostagram이라는 인스타그램을 모티브로 한 앱을 만들고 Django에 대해 공부하면서 배운 내용들을 기반으로 기능을 구현한 학과에서 사용할 수 있는 cs_web 프로젝트입니다.
+
+![](https://user-images.githubusercontent.com/75882110/174694536-c4639cb8-2638-441e-b2ee-9ef02dbc62a6.png)
+
+![](https://user-images.githubusercontent.com/75882110/174694576-95562f58-3369-4bd5-aec8-689de64bfcb0.png)
 
 ## 5. 프로젝트 기능
 
-![01](https://parkhyeonchae.github.io/2020/03/22/django-project-01/01.PNG)
+![01](https://user-images.githubusercontent.com/75882110/174693228-8cedfdc7-2866-4955-80e6-87371d921c6e.png)
 
 - users
 
-  > 사용자 계정 App입니다. Custom UserCreationForm을 사용해 회원가입 기능을 구현하고였고 로그인 기능 구현 및 SMTP를 활용한 인증, 프로필수정, Ajax로 ID/PW 찾기, PW변경, 회원탈퇴 등의 기능을 구현했습니다.
-  >
-  > 또한 user에 level을 부여해 각자 level에 맞게 권한을 줬습니다.
+  > 사용자 계정 App입니다. UserCreationForm을 기반으로 로그인, 회원가입, SMTP를 활용한 인증, 프로필수정, Ajax로 ID/PW 찾기, PW변경, 회원탈퇴 등의 기능을 구현했습니다.
 
 - notice
 
+  > ![](https://user-images.githubusercontent.com/75882110/174694402-777b4f98-0e7e-4b0a-9328-d5a3502ac2a6.png)
+  >
   > 공지사항 App입니다. 관리자 권한의 계정만 CRUD가 가능하며 게시글 검색, 공지사항 상단표시 등과 같은 기능을 추가했습니다.
 
 - free
 
-  > 자유게시판 App입니다. 
+  > ![](https://user-images.githubusercontent.com/75882110/174694376-00ad04d0-fb57-4b78-8fc3-a0a4a017a128.jpg)
   >
-  > 구현 상세 내용
-  >
-  > > - 본인의 글일시 댓글과 답글에 (글쓴이) 표시를 한다.
-  > > - 답글작성은 댓글에서만 가능하다.
-  > > - 게시글을 볼때 현재 로그인된 쿠키를 이용해 조회수 증가
-  > > - 댓글과 답글 작성, 삭제시 그 갯수를 동적으로 표시한다.
-  > > - 본 게시글이 삭제될시 댓글과 답글은 DB상에서 삭제된다.
-  > > - 댓글과 답글 삭제시 DB상에서 내용은 보존한다.
-  > > - 댓글과 답글 삭제시 삭제된 댓글이라는 표시를 한다.
-  > > - 답글이 있는 댓글을 삭제해도 그 답글은 보존한다.
-  > > - 답글의 입력창은 답글이 입력되는 위치에 동적으로 생성한다, (다른곳을 Click시 입력창 삭제)
-  > > - 댓글과 답글 입력, 삭제는 비동기로 구현
-  >
-  > 자유게시판 권한
-  >
-  > - level 2,3 = Create, Read , 본인글 Update, Delete
-  > - level 1 관리자 = Create, Read, Delete, 본인글 Update
-  > - level 0 개발자 = Create, Read, Update, Delete
-  >
-  > 게시글 세부 권한
-  >
-  > - level 0 개발자 : 글의 수정, 삭제, 모든 댓글의 입력, 삭제, 모든 답글의 입력, 삭제
-  > - level 1 관리자 : 글의 삭제, 모든 댓글의 입력, 삭제, 모든 답글의 입력, 삭제
-  > - level 2 사용자 : 글의 보기, 댓글의 입력, 답글의 입력 (본인일시 수정, 삭제, 댓글 입력, 삭제 ,답글 입력, 삭제)
-
+  > 자유게시판 App입니다. 질문, 정보와 같은 카테고리를 추가하였고, 공지사항 App과 달리 Ajax 비동기 형식 댓글달기. 답글달기와 같은 기능을 추가했습니다.
 
 - Todo
 
-  >일정관리 App입니다. 일정을 추가하고 본인일시 완료버튼을 눌러 일정을 삭제할수 있습니다.
+  > ![](https://user-images.githubusercontent.com/75882110/174694331-5eb00e76-00ee-4a19-acb4-a3618f622594.jpg)
+  >
+  > 일정관리 앱입니다. 자신의 글만 보이게 구현했습니다.
+
+- coocr
+
+  > ![](https://user-images.githubusercontent.com/75882110/174694219-23f03525-e892-4fdc-8213-bd1a63cd35a6.jpg)
+  >
+  > Ocr모델을 사용해 이미지에 있는 텍스트를 추출해주는 페이지를 구현했습니다.
+
+- user_admin
+
+  > ![](https://user-images.githubusercontent.com/75882110/174694434-6f71ef0d-75a1-40a3-9ce7-898d8c497d4c.png)
+  >
+  > ![](https://user-images.githubusercontent.com/75882110/174694457-361d1e23-d485-42da-ad65-47bd04b29b16.png)
+  >
+  > 관리자, 개발자 레벨의 사용자만 해당 탭이 보이고 회원목록들을 나열하고 탈퇴시킬수 있게 구현했습니다.
+
+- instagram
+
+  > ![](https://user-images.githubusercontent.com/75882110/174694478-a5b2c6d5-5468-4cd0-a8e2-e52d6ba78a4c.jpg)
+  >
+  > SummerNote기반의 게시글 작성으로 인스타그램을 모티브로한 DDostagram을 구현했습니다.
