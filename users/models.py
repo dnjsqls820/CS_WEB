@@ -9,6 +9,7 @@ from .choice import *
 
 class UserManager(BaseUserManager):
     def create_user(self, user_id, password, email, hp, name, student_id, grade, department, circles, auth, **extra_fields):
+        # 개인정보로 user 인스턴스 생성
         user = self.model(
             user_id = user_id,
             email = email,
