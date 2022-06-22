@@ -72,3 +72,21 @@ Django를 공부하면서 개인 프로젝트를 하고싶어 컴퓨터공학과
   > ![](https://user-images.githubusercontent.com/75882110/174694478-a5b2c6d5-5468-4cd0-a8e2-e52d6ba78a4c.jpg)
   >
   > SummerNote기반의 게시글 작성으로 인스타그램을 모티브로한 DDostagram을 구현했습니다.
+
+  ## DB
+
+  - Notice
+
+    ![](https://user-images.githubusercontent.com/75882110/174928851-2cbf2c39-89aa-4c4a-b182-2c50b81c92f3.png)
+
+  - Free
+
+    ![](https://user-images.githubusercontent.com/75882110/174928899-f587f7ba-b58a-4e51-9476-5e89bb623bd2.png)
+
+  - DDoStagram
+
+    ![](https://user-images.githubusercontent.com/75882110/174928951-d096c093-4a80-4526-8976-c8632a07fce4.png)
+
+  - Todo
+
+    ![](https://user-images.githubusercontent.com/75882110/174928993-e9124c17-6ff6-478d-9279-865469eab66c.png)
